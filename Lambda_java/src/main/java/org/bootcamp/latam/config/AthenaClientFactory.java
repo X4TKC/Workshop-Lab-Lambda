@@ -14,7 +14,7 @@ public class AthenaClientFactory {
     @Bean
     @Profile("dev")
     public AthenaClient createClientDev() {
-        return AthenaClient.builder().region(Region.US_WEST_2)
+        return AthenaClient.builder().region(Region.US_EAST_1)
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
     }

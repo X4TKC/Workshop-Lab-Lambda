@@ -9,7 +9,6 @@ import org.springframework.beans.BeanUtils;
 import software.amazon.awssdk.services.athena.AthenaClient;
 import software.amazon.awssdk.services.athena.model.*;
 import software.amazon.awssdk.services.athena.paginators.GetQueryResultsIterable;
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -86,12 +85,10 @@ public class AthenaQueryExecutor<T> {
             for (GetQueryResultsResponse result : getQueryResultsResults) {
                 List<Row> results = result.resultSet().rows();
                 res = processRows(results, pojoClass);
-                System.out.println("FOR processrows here!!" + res);
             }
         } catch (AthenaException e) {
             logger.error("Failed to process with reason: {}", e.getMessage());
         }
-        System.out.println("OUT OF FOR processrows here!!" + res);
         return res;
     }
 

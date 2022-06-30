@@ -11,7 +11,7 @@ import java.util.List;
 public class AthenaServiceImpl<T> implements IAthenaService
 {
 
-    AthenaClient athenaClient=AthenaClient.builder().region(Region.US_WEST_2)
+    AthenaClient athenaClient=AthenaClient.builder().region(Region.US_EAST_1)
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
 
