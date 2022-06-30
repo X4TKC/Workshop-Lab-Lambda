@@ -1,0 +1,62 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'software.amazon.awssdk:lambda:2.17.209'
+    implementation 'software.amazon.awssdk:url-connection-client:2.17.209'
+    implementation 'software.amazon.awssdk:bom:2.17.209'
+    implementation 'com.amazonaws.serverless:aws-serverless-java-container-springboot2:1.8.2'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-bom
+    implementation 'com.amazonaws:aws-java-sdk-bom:1.12.243'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
+    implementation 'org.springframework.boot:spring-boot-starter:2.7.0'
+
+    // https://mvnrepository.com/artifact/software.amazon.awssdk/auth
+    implementation 'software.amazon.awssdk:auth:2.17.209'
+
+    // https://mvnrepository.com/artifact/software.amazon.awssdk/athena
+    implementation 'software.amazon.awssdk:athena:2.17.209'
+
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+
+    // https://mvnrepository.com/artifact/software.amazon.awssdk/url-connection-client
+    implementation 'software.amazon.awssdk:url-connection-client:2.17.216'
+
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from(configurations.compileClasspath) {
+            exclude 'tomcat-embed-*'
+        }
+    }
+}
+
+build.dependsOn buildZip
